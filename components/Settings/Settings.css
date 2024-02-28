@@ -9,14 +9,10 @@
 }
 input:checked + .settings-button{
   opacity: 1;
-  /* animation properties */
-  animation-name: my-animation;
-  animation-duration: .5s;
-  animation-iteration-count: 1;
-  animation-timing-function: linear;
+  animation-name: shake .5s 1 linear;
 }
 
-@keyframes my-animation {
+@keyframes shake {
   0%{
     transform: rotate(15deg);
   }

@@ -1,41 +1,64 @@
+/**
+ * Handles the click event for the "Sounds" checkbox,
+ * adjusting volume and saving settings.
+ */
 $("#sounds").addEventListener("click", () => {
-  if ($("#sounds").checked) {
-    $("#sound").volume = radioConfigs.getItem("volume");
-    radioConfigs.setItem("soundsVolume", $("#sound").volume);
+  const soundsCheckbox = $("#sounds");
+  const soundElement = $("#sound");
+
+  if (soundsCheckbox.checked) {
+    soundElement.volume = radioConfigs.getItem("volume");
+    radioConfigs.setItem("soundsVolume", soundElement.volume);
   } else {
-    $("#sound").volume = 0;
+    soundElement.volume = 0;
     radioConfigs.setItem("soundsVolume", 0);
   }
 });
 
+/**
+ * Set the volume and checked status based on stored configurations for sounds.
+ */
 $("#sound").volume = radioConfigs.getItem("soundsVolume");
 $("#sounds").checked = radioConfigs.getItem("soundsVolume");
 
-// animate videos
-
+/**
+ * Handles the click event for the "Animations" checkbox,
+ * updating settings and rendering.
+ */
 $("#animations").addEventListener("click", () => {
-  if ($("#animations").checked) {
+  /**
+   * @type {HTMLInputElement}
+   */
+  const animationsCheckbox = $("#animations");
+
+  if (animationsCheckbox.checked) {
     radioConfigs.setItem("animations", true);
   } else {
     radioConfigs.setItem("animations", false);
   }
 
-  renderStation(currentStation)
+  renderStation(currentStation);
 });
 
+/**
+ * Set the checked status based on stored configurations for animations.
+ */
 $("#animations").checked = radioConfigs.getItem("animations");
 
-// roll back
+/**
+ * Handles the click event for the "Roll back settings" button
+ * prompting for confirmation and taking action.
+ */
 $("#roll-back-sennings").addEventListener("click", async () => {
   try {
-    if (
-      await openModal(
-        "Roll back.",
-        "are you sure you want to return to default settings?"
-      )
-    ) {
+    const shouldRollback = await openModal(
+      "Roll back.",
+      "Are you sure you want to return to default settings?"
+    );
+
+    if (shouldRollback) {
       localStorage.removeItem(APP_NAME);
-      
+
       radioConfigs = new LocalStorageItem(defaultLSConfig);
 
       radioConfigs.save();
