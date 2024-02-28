@@ -1,60 +1,104 @@
-let sound = $("#sound");
+/**
+ * Represents the audio element for playing sounds.
+ * @type {HTMLAudioElement}
+ */
+const sound = $("#sound");
 
-let s_button = "sound/button.mp3";
-let s_swipe_on = "sound/swipe-on.mp3";
-let s_swipe_off = "sound/swipe.mp3";
-let s_click = "sound/click.mp3";
-let s_ring = "sound/ring.wav";
-let s_modal = "sound/modal.wav";
-let s_hover = "sound/hover.mp3";
+/**
+ * Object containing paths to various sound files.
+ * @type {Object<string, string>}
+ */
+const soundPaths = {
+  button: "sound/button.mp3",
+  swipeOn: "sound/swipe-on.mp3",
+  swipeOff: "sound/swipe.mp3",
+  click: "sound/click.mp3",
+  ring: "sound/ring.wav",
+  modal: "sound/modal.wav",
+  hover: "sound/hover.mp3",
+};
 
-function playSound(src = s_click) {
+/**
+ * Plays a sound with the provided source.
+ * @param {string} [src=soundPaths.click] - The source of the sound.
+ */
+function playSound(src = soundPaths.click) {
   sound.src = src;
   sound.play();
 }
 
-$("#animations").addEventListener("click", () => {
-  playSound(s_click);
-})
+// Event listeners for specific elements triggering sounds
 
+/**
+ * Event listener for the 'click' event on the #animations element.
+ */
+$("#animations").addEventListener("click", () => {
+  playSound(soundPaths.click);
+});
+
+/**
+ * Event listener for the 'click' event on elements with the .controls class.
+ */
 $$(".controls").forEach((item) => {
   item.addEventListener("click", () => {
-    playSound(s_button);
+    playSound(soundPaths.button);
   });
 });
 
+/**
+ * Event listener for the 'mouseover' event on elements with the .social class.
+ */
 $$(".social").forEach((item) => {
   item.addEventListener("mouseover", () => {
-    playSound(s_hover);
+    playSound(soundPaths.hover);
   });
 });
 
-// Nav Bar buttons sounds
 let swiped = false;
+
+// Event listeners for navigation bar buttons triggering sounds
+
+/**
+ * Event listener for the 'click' event on elements with the .nav-bar-button class.
+ */
 $$(".nav-bar-button").forEach((item) => {
   item.addEventListener("click", () => {
     if (!item.classList.contains("active")) {
-      playSound(s_swipe_on);
+      playSound(soundPaths.swipeOn);
       swiped = true;
     } else {
-      playSound(s_click);
+      playSound(soundPaths.click);
     }
   });
 });
 
+/**
+ * Event listener for the 'click' event on the #back-to-controls element.
+ */
 $("#back-to-controls").addEventListener("click", () => {
   if (swiped) {
-    playSound(s_swipe_off);
+    playSound(soundPaths.swipeOff);
     swiped = false;
   }
 });
 
-// Volume controls
-$("#sound-min").addEventListener("click", () => playSound(s_button));
-$("#sound-max").addEventListener("click", () => playSound(s_button));
+// Event listeners for volume controls triggering sounds
 
-$("#sounds").addEventListener("click", () => playSound(s_ring));
+/**
+ * Event listener for the 'click' event on the #sound-min element.
+ */
+$("#sound-min").addEventListener("click", () => playSound(soundPaths.button));
 
+$("#sound-max").addEventListener("click", () => playSound(soundPaths.button));
+
+// Settings.js
+$("#sounds").addEventListener("click", () => playSound(soundPaths.ring));
+
+/**
+ * Reloads click sounds for elements matching the specified class name after a timeout.
+ * @param {string} className - The class name of elements to reload sounds for.
+ * @param {string} sound - The sound source to be played on click.
+ */
 function reloadRenderedSounds(className, sound) {
   setTimeout(() => {
     $$(className).forEach((element) => {
@@ -66,5 +110,8 @@ function reloadRenderedSounds(className, sound) {
   }, 10);
 }
 
-reloadRenderedSounds(".theme-button", s_click);
-reloadRenderedSounds(".station", s_click);
+// Initial reload of click sounds for theme buttons and stations
+
+reloadRenderedSounds(".theme-button", soundPaths.click);
+
+reloadRenderedSounds(".station", soundPaths.click);

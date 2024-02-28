@@ -35,7 +35,7 @@ class SimpleModal {
       this.acceptButton.focus();
 
       const handleButtonClick = (result) => {
-        playSound(s_button);
+        playSound(soundPaths.button);
         resolve(result);
         this._destroyModal();
       };
@@ -122,7 +122,7 @@ class SimpleModal {
 }
 
 async function openModal(title, message, yes = "Yes", no = "No") {
-  playSound(s_modal);
+  playSound(soundPaths.modal);
   const myModal = new SimpleModal(title, message, yes, no);
   try {
     return await myModal.question();

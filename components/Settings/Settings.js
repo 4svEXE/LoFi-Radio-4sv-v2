@@ -69,7 +69,7 @@ $("#roll-back-sennings").addEventListener("click", async () => {
 
       updateControls();
 
-      reloadRenderedSounds(".theme-button", s_click);
+      reloadRenderedSounds(".theme-button", soundPaths.click);
     }
   } catch (err) {
     console.error(err);

@@ -7,25 +7,25 @@
   cursor: pointer;
   transition: .3s;
 }
-input:checked + .settings-button{
+input:checked + .settings-button {
   opacity: 1;
-  animation-name: shake .5s 1 linear;
+  animation: shake 0.5s 1 linear;
 }
 
 @keyframes shake {
-  0%{
+  0% {
     transform: rotate(15deg);
   }
-  25%{
+  25% {
     transform: rotate(-15deg);
   }
-  50%{
+  50% {
     transform: rotate(15deg);
   }
-  75%{
+  75% {
     transform: rotate(-15deg);
   }
-  100%{
+  100% {
     transform: rotate(15deg);
   }
 }
