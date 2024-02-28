@@ -11,19 +11,32 @@ if (!localStorage.getItem(APP_CAT)) {
   cat.currentSkin = localStorage.getItem(APP_CAT);
 }
 
-// show cat`s skin
-function renderCat(idSkin) {
-  $("#cat").src = `./img/cat/cat-${cat.skins[idSkin]}.gif`;
+/**
+ * Renders the cat with the specified skin.
+ * @param {number} skinId - The index of the cat skin to render.
+ */
+function renderCat(skinId) {
+  /**
+   * Element representing the cat image.
+   * @type {HTMLImageElement}
+   */
+  const catImage = $("#cat");
+  catImage.src = `./img/cat/cat-${cat.skins[skinId]}.gif`;
 
-  //sounds for the cat
-  $("#cat").addEventListener("mouseover", () => {
-    if (idSkin - 1 >= 0) {
-      playSound(`./sound/cat/${idSkin - 1}.mp3`);
+  // Sounds for the cat
+  catImage.addEventListener("mouseover", () => {
+    if (skinId - 1 >= 0) {
+      playSound(`./sound/cat/${skinId - 1}.mp3`);
     }
   });
 }
+
+// Render the initial cat with the current skin
 renderCat(cat.currentSkin);
 
+/**
+ * Sets the next cat skin and updates local storage.
+ */
 function setNextSkin() {
   cat.currentSkin++;
   if (cat.currentSkin >= cat.skins.length) cat.currentSkin = 0;
@@ -32,6 +45,7 @@ function setNextSkin() {
   renderCat(cat.currentSkin);
 }
 
+// Add click event listener to change cat skin on click
 $("#cat").addEventListener("click", function () {
   setNextSkin();
 });
