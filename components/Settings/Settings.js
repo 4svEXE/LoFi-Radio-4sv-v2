@@ -36,7 +36,7 @@ $("#roll-back-sennings").addEventListener("click", async () => {
     ) {
       localStorage.removeItem(APP_NAME);
 
-      //localStorageConfigs = defaultLSConfig
+      localStorageConfigs = defaultLSConfig
 
       radioConfigs = new LocalStorageItem(localStorageConfigs);
 

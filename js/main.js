@@ -1,4 +1,4 @@
-let localStorageConfigs = {
+const defaultLSConfig = {
   url: "https://stream-27.zeno.fm/0r0xa792kwzuv?zs=6aokNGKPRSuD8bxc0o2AvQ",
   stationId: 0,
   volume: 0.8,
@@ -8,6 +8,8 @@ let localStorageConfigs = {
   animations: true,
   version: 0.1
 };
+
+let localStorageConfigs = defaultLSConfig
 
 let radioConfigs = new LocalStorageItem(localStorageConfigs);
 

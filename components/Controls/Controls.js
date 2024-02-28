@@ -36,8 +36,12 @@ $("#fav_icon").addEventListener("click", () => {
     currentStation = 0;
   }
 
+  radioConfigs.setItem('stations', stations)
+
   renderStation(currentStation); //function from Controls.js
   addStations();
+
+  console.log('rendered', currentStation, stations[currentStation], stations)
 });
 
 $("#next").onclick = () => {

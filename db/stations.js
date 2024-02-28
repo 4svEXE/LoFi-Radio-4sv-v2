@@ -25,8 +25,6 @@ async function getDataFromDB() {
     ) {
       stations = radioConfigs.getItem("stations");
     } else {
-      //getStations();
-
       radioConfigs.setItem("stations", decodedData.stations);
       radioConfigs.setItem("version", decodedData.version);
     }
