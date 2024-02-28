@@ -1,8 +1,16 @@
+/**
+ * Sets a CSS variable on the root element.
+ * @param {string} variable - The name of the CSS variable.
+ * @param {string} property - The value to set for the CSS variable.
+ */
 function setCssVar(variable, property) {
   let root = document.documentElement;
   root.style.setProperty(variable, property);
 }
 
+/**
+ * Adds theme buttons and handles their events, including creation, deletion, and rendering.
+ */
 function addThemes() {
   $(".content-page.p-themes").innerText = "";
   themes.forEach((theme, i) => {
@@ -21,7 +29,7 @@ function addThemes() {
     $(".content-page.p-themes").insertAdjacentHTML("beforeend", item);
   });
 
-  // add button for creating new theme
+  // add button for creating a new theme
   let addNewThemeButton = `
     <div class="theme-button-container sv-flex">
       <div class="add-new-theme sv-flex" onClick()>
@@ -52,7 +60,7 @@ function addThemes() {
     });
   });
 
-  //delete theme
+  // delete theme
   $$(".theme-delete-button").forEach((button, id) => {
     button.addEventListener("click", async () => {
       try {
@@ -80,8 +88,14 @@ function addThemes() {
     });
   });
 }
+
+// Initialize themes
 addThemes();
 
+/**
+ * Renders a theme by setting CSS variables based on the provided theme index.
+ * @param {number} id - The index of the theme to render.
+ */
 function renderTheme(id) {
   for (const key in themes[id]) {
     if (Object.hasOwnProperty.call(themes[id], key)) {
@@ -90,19 +104,24 @@ function renderTheme(id) {
     }
   }
 }
+
+// Render the initial theme
 renderTheme(radioConfigs.themeId);
 
-//save theme
+// Save theme
 let newTheme = {};
-// add new themes
+
+/**
+ * Upgrades input type color and handles related events.
+ */
 function upgrageInputsTypeColor() {
   setTimeout(() => {
-    //show page adding new themes
+    // show page adding new themes
     $(".add-new-theme").addEventListener("click", () => {
       $(".p-add-themes").classList.add("active");
     });
 
-    //hide page adding new themes
+    // hide page adding new themes
     $("#back-to-themes").addEventListener("click", () => {
       $(".p-add-themes").classList.remove("active");
     });
@@ -119,12 +138,16 @@ function upgrageInputsTypeColor() {
         newTheme["--" + item.id] = item.value;
       });
       saveTheme();
-      
     });
   }, 200);
 }
+
+// Initialize input color upgrades
 upgrageInputsTypeColor();
 
+/**
+ * Saves the new theme by adding it to the themes array and updating configuration settings.
+ */
 function saveTheme() {
   console.log("Saving theme");
   themes.push(newTheme);

@@ -121,7 +121,7 @@
 }
 
 input[type="color"] {
-  -webkit-appearance: none;
+  --webkit-appearance: none;
   border: 1px solid var(--border-bg-color);
   background: #fff;
   width: 33px;
