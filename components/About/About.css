@@ -1,0 +1,30 @@
+.social{
+  width: 32px;height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 5px;
+}
+.social img{
+  width: 100%;
+  transition: .3s;
+  z-index: 5;
+}
+.social::before{
+  content: "";
+  position: absolute;
+  top:50%; left:50%;
+
+  width: 0px;height: 0px;
+  background-color: var(--active-bg-color);
+  transition: .3s;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.social:hover::before{
+  top:-30%;
+  transform: translateX(-50%);
+  width: 6px;height: 6px;
+}
+.social img:hover{
+  transform: scale(1.1);
+}

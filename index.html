@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>4sv-lofi-radio</title>
+</head>
+<body>
+	<div class="css">
+		<link href="css/variables.css" rel="stylesheet" type="text/css" />
+		<link href="css/styles.css" rel="stylesheet" type="text/css" />
+		<link href="css/tooltip.css" rel="stylesheet" type="text/css" />
+		<link href="css/scrollBarStyle.css" rel="stylesheet" type="text/css" />
+	
+		<div class="components">
+			<link href="components/Confirm/Confirm.css" rel="stylesheet" type="text/css" />
+			<link href="components/Controls/Controls.css" rel="stylesheet" type="text/css" />
+			<link href="components/Controls/Cat/Cat.css" rel="stylesheet" type="text/css" />
+			<link href="components/Themes/Themes.css" rel="stylesheet" type="text/css" />
+			<link href="components/Stations/Stations.css" rel="stylesheet" type="text/css" />
+			<link href="components/Settings/Settings.css" rel="stylesheet" type="text/css" />
+			<link href="components/About/About.css" rel="stylesheet" type="text/css" />
+		</div>
+	</div>
+	
+	<div class="wrapper">
+	  <div class="nav-bar sv-flex sv-col">
+		<div tooltip="settings">
+		  <img src="img/nav/settings.png" id="p-settings" class="nav-bar-button" />
+		</div>
+		<div tooltip="themes">
+		  <img src="img/nav/theme.png" id="p-themes" class="nav-bar-button" />
+		</div>
+		<div tooltip="stations">
+		  <img src="img/nav/radio.png" id="p-stations" class="nav-bar-button" />
+		</div>
+		<div tooltip="about">
+		  <img src="img/nav/info.png" id="p-about" class="nav-bar-button" />
+		</div>
+	  </div>
+	
+	  <div class="content">
+		<div class="content-page p-settings sv-flex sv-col">
+			<audio src="" id="sound"></audio>
+			<span>SETTINGS</span>
+	
+			<div class="sv-flex">			
+				<label class="switch button-standart" tooltip="enable sounds">
+					<input type="checkbox" id="sounds">
+					<img src="img/settings/ring.png" id="sounds-icon" class="settings-button"/>
+				</label>
+	
+				<label class="switch button-standart" tooltip="enable animations">
+					<input type="checkbox" id="animations">
+					<img src="img/settings/animations.png" id="animations-sennings" class="settings-button"/>
+				</label>
+	
+				<div class="button-standart" tooltip="Roll back">
+					<img src="img/settings/rool-back.png" id="roll-back-sennings" />
+				</div>
+			</div>
+		</div>
+		<div class="content-page p-themes sv-flex"></div>
+		<div class="content-page p-stations sv-flex"></div>
+		<div class="content-page p-about sv-flex sv-col">
+			<h3>My contacts</h3>
+			<div class="socials sv-flex">
+				<a href="https://www.instagram.com/sv.png" 
+					target="_blank" class="social" 
+					tooltip-bottom="instagram.com/sv.png"
+				>
+					<img src="img/about/instagram.png">
+				</a>
+	
+				<a href="https://t.me/sv_png" 
+					target="_blank" class="social" 
+					tooltip-bottom="t.me/sv_png">
+					<img src="img/about/telegram.png">
+				</a>
+	
+				<a href="https://www.github.com/4svEXE" 
+					target="_blank" class="social"
+					tooltip-bottom="github.com/4svEXE"
+				>
+					<img src="img/about/github.png">
+				</a>
+	
+				<a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcRwRQBxXRZGdnmSNbxfCXlSRRQscdffDqksNcrpnNptQTRcKttngCHcXGNzbvKNQVHLwNGzg"
+					target="_blank" class="social"
+					tooltip-bottom="4sv.exe@gmail.com"
+				>
+					<img src="img/about/gmail.png">
+				</a>
+				
+				<a href="https://addons.opera.com/uk/extensions/details/4sv-lofi-radio/" 
+					target="_blank" class="social"
+					tooltip-bottom="4sv.lofi.radio"
+				>
+					<img src="img/about/opera.png">
+				</a>
+			</div>
+			
+		</div>
+			<div class="s-logo-container">
+				<img src="img/stations/01.gif" id="s-logo" />
+				
+				<div id="back-to-controls" class="sv-flex">
+					<div id="back-arrow"></div>
+				</div>
+				<div id="loader" class="sv-flex">
+					<div class="loader-body active"></div>
+				</div>
+				
+			</div>
+	
+		  <div class="station-controls active sv-flex sv-col">
+			<div class="header sv-flex">
+			  <div id="s-title">Station 1</div>
+			  <div id="w-title">LoFi Radio</div>
+			</div>
+	
+			<div class="vol-controls-container sv-flex">
+				<img src="/img/controls/sound-min.svg" id="sound-min">
+	
+				<div id="volume-container">
+				  <input
+					type="range"
+					name="volume"
+					id="volume"
+					min="0"
+					max="1"
+					step="0.01"
+					value="0.8"
+				  />
+				</div>
+	
+				<img src="/img/controls/sound-max.svg" id="sound-max">
+			</div>
+			
+			<output class="volume-output" for="volume"></output>
+	
+			<div class="sv-flex controls-wrapper">
+	
+			  <img src="img/controls/fav.png" id="fav_icon" class="controls" />
+	
+			  <img src="img/controls/next_prew.png" id="prew" class="controls" />
+			  <img src="img/controls/play.png" id="play" class="controls" />
+			  <img src="img/controls/next_prew.png" id="next" class="controls" />
+	
+			  <img src="img/cat/cat-black.gif" id="cat" class="controls" />
+	
+			</div>
+		  </div>
+		</div>
+	  </div>
+	
+	  <div class="scripts">
+		<script src="js/global.js"></script>
+		
+		<script src="js/class/LocalStorageItem.js"></script>
+		<script src="js/main.js"></script>
+	
+		<script src="db/stations.js"></script>
+		<script src="db/themes.js"></script>
+	
+		<div class="components">
+			<script src="components/Confirm/Confirm.js"></script>
+			<script src="components/Settings/Settings.js"></script>
+			<script src="components/Sounds/Sounds.js"></script>
+			<script src="components/Controls/Controls.js"></script>
+			<script src="components/Controls/Cat/Cat.js"></script>
+			<script src="components/Themes/AddNewTheme.js"></script>
+			<script src="components/Themes/Themes.js"></script>
+			<script src="components/Stations/Stations.js"></script>
+		</div>
+	  </div>
+	</div>
+</body>
+</html>

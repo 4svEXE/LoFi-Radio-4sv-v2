@@ -1,0 +1,26 @@
+{
+  "background": {
+    "page": "bg.html",
+    "script": "js/bg.js"
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "img/ico.png",
+      "38": "img/ico.png"
+    },
+    "default_popup": "index.html",
+    "default_title": "LoFi Radio"
+  },
+  "description": "A browser extension that allows you to listen to online radio stations in the lo-fi genre. It has 15 different radio stations available that you can easily switch between. In addition, the extension has the ability to add themes to enjoy an even wider selection of music. For the convenience of users, it is possible to adjust the radio to their needs. The extension also includes pleasant sounds and a cute cat that can make listening to music an even more enjoyable experience. Enjoy music and pleasant sounds at any time simply thanks to this extension.",
+  "developer": {
+    "name": "a46ea4e6-dbd2-445b-9865-e50ce2a888a2"
+  },
+  "icons": {
+    "48": "img/ico.png",
+    "96": "img/ico.png"
+  },
+  "manifest_version": 2,
+  "name": "4sv LoFi Radio",
+  "update_url": "https://extension-updates.opera.com/api/omaha/update/",
+  "version": "1.3"
+}

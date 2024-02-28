@@ -1,0 +1,60 @@
+.switch input {
+  display: none;
+}
+
+.settings-button{
+  opacity: .5;
+  cursor: pointer;
+  transition: .3s;
+}
+input:checked + .settings-button{
+  opacity: 1;
+  /* animation properties */
+  animation-name: my-animation;
+  animation-duration: .5s;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
+
+@keyframes my-animation {
+  0%{
+    transform: rotate(15deg);
+  }
+  25%{
+    transform: rotate(-15deg);
+  }
+  50%{
+    transform: rotate(15deg);
+  }
+  75%{
+    transform: rotate(-15deg);
+  }
+  100%{
+    transform: rotate(15deg);
+  }
+}
+
+.p-settings span{
+  font-size: 20px;
+  padding: 5px;
+}
+.p-settings h4 {
+  padding: 5px;
+}
+
+.button-standart{
+  width: 35px;
+  cursor: pointer;
+  background-color: var(--active-bg-color);
+  padding: 8px;margin: 5px;
+  box-shadow: 0 0 1px var(--active-bg-color);
+  border-radius: 50%;
+  transition: .3s;
+  border: 1px solid var(--border-bg-colo);
+}
+.button-standart img{
+  width: 100%;
+}
+.button-standart:hover{
+  background-color: var(--active-bg-color);
+}

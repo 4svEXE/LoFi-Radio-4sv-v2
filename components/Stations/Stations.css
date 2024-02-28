@@ -1,0 +1,48 @@
+.p-stations {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 70px;
+  align-content: flex-start
+}
+.p-stations .station-wrapper{
+  width: 70px;height: 70px;
+}
+.station-wrapper .station{
+  width: 60px;height: 60px;
+  position: relative;
+}
+.logo-station{
+  width: 60px;height: 60px;
+  border-radius: 8px;
+  border: 1px solid var(--border-bg-color);
+  background-color: var(--controlss-bg-color);
+}
+.play-station{
+  position: absolute;
+  width: 20px;height: 20px;
+  border: 1px solid var(--border-bg-color);
+  background-color: var(--controlss-bg-color);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: .2s;
+  opacity: .5;
+}
+
+.play-station:hover{
+  transform: scale(1.6);
+}
+.station:hover .play-station{
+  opacity: 1;
+}
+
+.fav-icon{
+  width: 12px;
+  position: absolute;
+  top: 5px;left: 5px;
+  opacity: 0;
+  border-radius: 50%;
+  background-color: var(--active-bg-color);
+}
+.fav-icon.active{
+  opacity: 1;
+}

@@ -1,0 +1,13 @@
+:root {
+  --app-width: 500px;
+  --app-height: 150px;
+  --app-nav: 50px;
+  --app-content: calc(var(--app-width) - var(--app-nav));
+  --app-controls: calc(var(--app-content) - var(--app-height));
+  --text-color: #000;
+  --main-bg-color: #fff;
+  --nav-bg-color: #ccc;
+  --border-bg-color: #000;
+  --active-bg-color: rgb(255, 242, 0);
+  --controlss-bg-color: #f2ecf3;
+}

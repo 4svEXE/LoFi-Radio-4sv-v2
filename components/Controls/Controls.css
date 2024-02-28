@@ -1,0 +1,237 @@
+.s-logo-container{
+  width: var(--app-height);
+  height: var(--app-height);
+  position: relative;
+}
+
+#s-logo {
+  width: var(--app-height);
+  height: var(--app-height);
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--border-bg-color);
+  padding: 3px;
+  margin-left: -10px;
+  background-color: var(--main-bg-color);
+  z-index: 5;
+}
+
+#back-to-controls.active{
+  position: absolute;
+  top: 0;left: 0;
+  width: calc(var(--app-height) / 3);
+  height: var(--app-height);
+  background-color: var(--active-bg-color);
+  opacity: .6;
+  overflow: hidden;
+  border-radius: 5px;
+  margin-left: -10px;
+  z-index: 4;
+  transition: .3s;
+  cursor: pointer;
+  padding-left: 15px;
+}
+#back-to-controls.active:hover{
+  background-color: var(--nav-bg-color);
+  opacity: .7;
+}
+#back-to-controls.active #back-arrow{
+  width: 30px;
+  height: 30px;
+  border: 4px solid var(--main-bg-color);
+  border-top: none;border-right: none;
+  transform: rotate(45deg);
+  transition: .3s;
+}
+
+#back-to-controls.active.blink{
+  animation: bilnk 1s infinite;
+}
+
+#back-to-controls.active.blink #back-arrow{
+  animation: bilnk_arrow 1s infinite;
+}
+
+@keyframes bilnk{
+  25%{
+    background-color: var(--nav-bg-color);
+  }
+  50%{
+    background-color: var(--active-bg-color);
+  }
+  75%{
+    background-color: var(--nav-bg-color);
+  }
+  100%{
+    background-color: var(--active-bg-color);
+  }
+}
+
+@keyframes bilnk_arrow{
+  25%{
+    transform: rotate(45deg) scale(1.2);
+  }
+  50%{
+    transform: rotate(45deg) scale(1);
+  }
+  75%{
+    transform: rotate(45deg) scale(1.2);
+  }
+  100%{
+    transform: rotate(45deg) scale(1);
+  }
+}
+
+/* LOADER */
+#loader{
+  position: absolute;
+  top: 0;left: 0;
+  width: var(--app-height);
+  height: var(--app-height);
+  background-color: #000;
+  opacity: 0;
+  overflow: hidden;
+  border-radius: 5px;
+  margin-left: -10px;
+
+  transition: .3s;
+}
+#loader.active{
+  opacity: .3;
+}
+
+.loader-body {
+  position: relative;
+  width: 50px;height: 50px;
+  z-index: 2;
+
+  border-radius: 50%;
+  border: 5px solid #c990d7;
+  border-bottom: 5px solid #231327;
+
+  animation: .3s linear infinite spinn;
+}
+
+@keyframes spinn{
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.station-wrapper.active {
+  border: 3px solid var(--border-bg-color);
+}
+.header {
+  width: 100%;
+  justify-content: space-between;
+}
+#w-title {
+  font-size: 16px;
+  opacity: 0.8;
+}
+#s-title {
+  font-size: 22px;
+  font-style: bold;
+}
+
+/* Volume */
+
+.vol-controls-container{
+  width: 100%;
+  margin: 15px 0;
+  border-radius: 5px;
+  border: 1px solid var(--border-bg-color);
+  background-color: var(--main-bg-color);
+  justify-content: space-around;
+}
+.vol-controls-container img{
+  width: 20px;
+  cursor: pointer;
+}
+
+#volume-container {
+  position: relative;
+  top: 0;left: 0;
+  width: 80%;
+  height: 10px;
+  overflow: hidden;
+  border-radius: 5px;
+  border: 1px solid var(--border-bg-color);
+}
+
+#volume {
+  position: relative;
+  top: -3px;
+  left: -3px;
+  width: 100%;
+  height: 10px;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  background-color: var(--main-bg-color);
+  height: 0.5rem;
+}
+input[type="range"]::-webkit-range-thumb {
+  border: none; /*Removes extra border that FF applies*/
+  border-radius: 2px; /*Removes default border-radius that FF applies*/
+  background-color: var(--border-bg-color);
+  transition: 0.2s;
+  height: 2rem;
+  width: 1rem;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  width: 10px;
+  -webkit-appearance: none;
+  height: 10px;
+  cursor: pointer;
+  background: var(--border-bg-color);
+  box-shadow: -800px 0 0 800px var(--controlss-bg-color);
+}
+
+/* Volume end */
+
+.controls-wrapper {
+  width: 100%;
+  border: 1px solid var(--border-bg-color);
+  background-color: var(--controlss-bg-color);
+  border-radius: 10px;
+}
+.controls {
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  -webkit-box-shadow: 1px -5px 72px -6px rgba(255, 255, 255, 0.75);
+  -moz-box-shadow: 1px -5px 72px -6px rgba(255, 255, 255, 0.75);
+  box-shadow: 1px -5px 72px -6px rgba(255, 255, 255, 0.75);
+  transition: 0.3s;
+  cursor: pointer;
+}
+.controls:hover {
+  border: 1px solid rgba(255, 5, 5, 0.4);
+  background-color: var(--active-bg-color);
+}
+.controls:active {
+  background-color: rgba(49, 48, 48, 0.54);
+}
+#prew {
+  transform: rotateY(180deg);
+}
+#fav_icon{
+  width: 30px;
+  height: 30px;
+  margin-right: 20px;
+  opacity: .5;
+  transition: .3s;
+}
+#fav_icon.active{
+  opacity: 1;
+}

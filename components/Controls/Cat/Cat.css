@@ -1,0 +1,12 @@
+#cat {
+  width: 30px;height: 30px;
+  margin-left: 20px;
+  transition: 0.3s;
+  background-color: #000;
+  opacity: .5;
+}
+
+#cat:hover {
+  transform: scale(2.2);
+  opacity: 1;
+}
