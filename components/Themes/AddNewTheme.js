@@ -1,9 +1,19 @@
+/**
+ * Generates HTML content for adding a new theme, 
+ * including color input fields and buttons.
+ * @returns {string} The HTML content for adding a new theme.
+ */
 function AddNewTheme() {
+  // Ensure the themeId is within valid range
   if (radioConfigs.getItem("themeId") >= themes.length) {
     radioConfigs.setItem("themeId", themes.length - 1);
   }
 
-  return `
+  /**
+   * HTML content for adding a new theme.
+   * @type {string}
+   */
+  const themeHTML = `
     <div class="add-new-theme-buttons sv-flex">
       <input type="button" id="back-to-themes" value="exit">
       <input type="button" id="save-theme" value="save">
@@ -53,4 +63,6 @@ function AddNewTheme() {
         </div>
     </div>
   `;
+
+  return themeHTML;
 }
