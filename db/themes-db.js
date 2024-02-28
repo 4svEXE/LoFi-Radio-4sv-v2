@@ -1,12 +1,28 @@
+/**
+ * Array representing themes for the application.
+ * @type {Array<object>}
+ */
 var themes;
 
+/**
+ * Checks if themes are stored in localStorage; if not,
+ * retrieves themes using getThemes function.
+ */
 if (radioConfigs.getItem("themes")) {
   themes = radioConfigs.getItem("themes");
 } else {
-  getThemes()
+  getThemes();
 }
 
+/**
+ * Function to retrieve default themes in case they are not stored in localStorage.
+ * Updates the themes array and saves it to localStorage.
+ */
 function getThemes() {
+  /**
+   * Default themes for the application.
+   * @type {Array<object>}
+   */
   themes = [
     {
       "--text-color": "#000000",
