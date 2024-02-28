@@ -1,19 +1,26 @@
+/**
+ * Adds stations to the Stations page, 
+ * rendering station elements based on configuration settings.
+ */
 function addStations() {
   $(".content-page.p-stations").innerText = "";
 
-  if (radioConfigs.getItem("stations"))
+  // Retrieve stations from configuration settings
+  if (radioConfigs.getItem("stations")) {
     stations = radioConfigs.getItem("stations");
+  }
 
   stations.forEach((station, i) => {
     let active = "";
     let icon = "play";
 
+    // Check if the current station is active
     if (radioConfigs.stationId == i) {
       active = "active";
       icon = "pause";
     }
 
-    //if station is favorite then add to this ststion class active
+    // If station is a favorite, add the "active" class
     let activeFav = station.favorite ? "active" : "";
 
     let stationHTML = `
@@ -31,16 +38,21 @@ function addStations() {
     $(".content-page.p-stations").insertAdjacentHTML("beforeend", stationHTML);
   });
 
-  // play radioststion on click
+  // Play radio station on click
   $$(".station-wrapper").forEach((station, stationID) => {
     station.addEventListener("click", () => {      
       currentStation = stationID;
-      renderStation(stationID); //function from Controls.js
+      renderStation(stationID); // Function from Controls.js
       addStations();
     });
   });
 }
+
+// Initialize stations
 addStations();
 
-//reload the stations in Stations page on click the station button in the nav
+/**
+ * Reloads the stations in the Stations page on clicking 
+ * the station button in the navigation.
+ */
 $("#p-stations").addEventListener("click", () => addStations());
