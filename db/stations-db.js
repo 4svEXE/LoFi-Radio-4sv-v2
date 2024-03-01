@@ -30,9 +30,21 @@ async function getDataFromDB() {
     const decodedData = JSON.parse(atob(data.content))[0];
 
     //Checks if local configurations or decoded data should be used.
-    const shouldUseLocalConfig =
-      radioConfigs.getItem("stations") ||
-      (decodedData.version <= radioConfigs.getItem("version"));
+    let shouldUseLocalConfig = true;
+
+    if (
+      radioConfigs.getItem("stations") &&
+      decodedData.version > radioConfigs.getItem("version")
+    ) {
+      shouldUseLocalConfig = false;
+    }
+
+    console.log(
+      "v: ",
+      decodedData.version,
+      radioConfigs.getItem("version"),
+      shouldUseLocalConfig
+    );
 
     //Updates the stations array based on the condition.
     stations = shouldUseLocalConfig
@@ -41,13 +53,15 @@ async function getDataFromDB() {
 
     //Checks if decoded data should be updated in the local configurations.
     if (!shouldUseLocalConfig) {
+      console.log("!shouldUseLocalConfig", decodedData);
       radioConfigs.setItem("stations", decodedData.stations);
       radioConfigs.setItem("version", decodedData.version);
     }
 
     //Updates the stations array with decoded data.
-    if(decodedData?.stations) stations = decodedData?.stations
+    if (decodedData?.stations) stations = decodedData?.stations;
 
+    console.log("stations", stations, decodedData?.stations);
   } catch (error) {
     console.log("error", error);
   }
@@ -56,7 +70,7 @@ async function getDataFromDB() {
   addStations();
 
   // Renders the current station
-  renderStation(radioConfigs.getItem('stationId'));
+  renderStation(radioConfigs.getItem("stationId"));
 }
 
 // Fetch data from the database when the script is executed

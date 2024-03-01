@@ -17,7 +17,7 @@ function updateControls() {
 //logic for adding/deleting station to favorites
 $("#fav_icon").addEventListener("click", () => {
   $("#fav_icon").classList.toggle("active");
-  
+
   stations[currentStation].favorite = !stations[currentStation].favorite;
 
   //sorting the stations by favorite
@@ -32,16 +32,16 @@ $("#fav_icon").addEventListener("click", () => {
 
   stations = tmp;
 
-  if(!stations[currentStation].favorite){
+  if (!stations[currentStation].favorite) {
     currentStation = 0;
   }
 
-  radioConfigs.setItem('stations', stations)
+  radioConfigs.setItem("stations", stations);
 
   renderStation(currentStation); //function from Controls.js
   addStations();
 
-  console.log('rendered', currentStation, stations[currentStation], stations)
+  console.log("rendered", currentStation, stations[currentStation], stations);
 });
 
 $("#next").onclick = () => {
@@ -56,6 +56,10 @@ $("#prew").onclick = () => {
   renderStation(currentStation);
 };
 
+function updateStationCounter() {
+  $("#w-title").innerText = `${currentStation + 1}/${stations.length}`;
+}
+
 function renderStation(station) {
   let animateStationImage = radioConfigs.getItem("animations") ? "" : "_.jpg";
 
@@ -69,6 +73,7 @@ function renderStation(station) {
   radioConfigs.setItem("stationId", station);
 
   updateControls();
+  updateStationCounter();
 
   if (stations[currentStation]?.favorite) {
     $("#fav_icon").classList.add("active");
@@ -93,8 +98,8 @@ $("#volume").onchange = () => {
 };
 $("#volume").value = radioConfigs.getItem("volume");
 
-function setAndRenderVolume(vol){
-  radioConfigs.setItem("volume", (vol));
+function setAndRenderVolume(vol) {
+  radioConfigs.setItem("volume", vol);
 
   $("#sound").volume = radioConfigs.getItem("volume");
   $("#volume").value = radioConfigs.getItem("volume");
@@ -105,9 +110,9 @@ $("#sound-min").onclick = () => {
   let currentVolume = radioConfigs.getItem("volume");
 
   if (currentVolume >= 0) {
-    setAndRenderVolume(currentVolume -= 0.1)
+    setAndRenderVolume((currentVolume -= 0.1));
   } else {
-    setAndRenderVolume(0)
+    setAndRenderVolume(0);
   }
 };
 
@@ -115,9 +120,9 @@ $("#sound-max").onclick = () => {
   let currentVolume = radioConfigs.getItem("volume");
 
   if (currentVolume <= 0.9) {
-    setAndRenderVolume(currentVolume += 0.1)
+    setAndRenderVolume((currentVolume += 0.1));
   } else {
-    setAndRenderVolume(1)
+    setAndRenderVolume(1);
   }
 };
 
@@ -145,7 +150,7 @@ $$(".nav-bar-button").forEach((element) => {
         $(".station-controls").classList.add("active");
       }
     } else {
-      dubbleToggle("#back-to-controls", 'blink', 1000)
+      dubbleToggle("#back-to-controls", "blink", 1000);
     }
   });
 });

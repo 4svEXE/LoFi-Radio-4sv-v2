@@ -1,0 +1,134 @@
+[
+    {
+        "version": 1.009,
+        "stations": [
+            {
+                "title": "24/7 Lofi Radio",
+                "image": "img/stations/01.gif",
+                "url": "https://ec3.yesstreaming.net:3755/stream",
+                "favorite": true
+            },
+            {
+                "title": "LoFi Chillout",
+                "image": "img/stations/02.gif",
+                "url": "https://stream-160.zeno.fm/0r0xa792kwzuv?zs=G0WO2et-SnG7qmsbsTLsqQ",
+                "favorite": false
+            },
+            {
+                "title": "Lofi 24/7",
+                "image": "img/stations/09.gif",
+                "url": "https://usa9.fastcast4u.com/proxy/jamz?mp=/1",
+                "favorite": false
+            },
+            {
+                "title": "Yoga Chill",
+                "image": "img/stations/04.gif",
+                "url": "https://radio4.vip-radios.fm:18027/stream-128kmp3-YogaChill",
+                "favorite": false
+            },
+            {
+                "title": "Vaporwaves",
+                "image": "img/stations/21.gif",
+                "url": "https://ice2.somafm.com/vaporwaves-128-mp3",
+                "favorite": false
+            },
+            {
+                "title": "Play Chill Radio",
+                "image": "img/stations/07.gif",
+                "url": "https://c5.auracast.net/listen/play_chill_radio/radio.mp3",
+                "favorite": false
+            },
+            {
+                "title": "Hollywood Wine",
+                "image": "img/stations/08.gif",
+                "url": "https://stream-158.zeno.fm/5dyp73rrqwzuv?zs=OaGGYtEtSuCERVzBZAJ5rw",
+                "favorite": false,
+                "8": 8
+            },
+            {
+                "title": "HotMix Lo-Fi",
+                "image": "img/stations/10.gif",
+                "url": "https://streaming.hotmixradio.fr/hotmix-lo-fi-en-mp3",
+                "favorite": false
+            },
+            {
+                "title": "LoFi Normal",
+                "image": "img/stations/05.gif",
+                "url": "https://live.hunter.fm/lofi_normal",
+                "favorite": false
+            },
+            {
+                "title": "The Sitio Lounge",
+                "image": "img/stations/11.gif",
+                "url": "https://a1.asurahosting.com/listen/sitio_lounge/radio.mp3",
+                "favorite": false
+            },
+            {
+                "title": "Radio Free Otaku",
+                "image": "img/stations/12.gif",
+                "url": "https://streaming.radio.co/s8267e5edc/listen",
+                "favorite": false
+            },
+            {
+                "title": "945 - Your k-pop",
+                "image": "img/stations/13.gif",
+                "url": "https://jaynair.radioca.st/stream",
+                "favorite": false
+            },
+            {
+                "title": "Soundtracks",
+                "image": "img/stations/15.gif",
+                "url": "http://hi5.streamingsoundtracks.com/;",
+                "favorite": false
+            },
+            {
+                "title": "Gamepad Music",
+                "image": "img/stations/16.gif",
+                "url": "https://centova.listenon.in/proxy/gamepad/stream",
+                "favorite": false
+            },
+            {
+                "title": "Instrums De Oro",
+                "image": "img/stations/17.gif",
+                "url": "https://stream-168.zeno.fm/0anygxe1b1duv?zs=PT_6Nvq0Qm6evPMVv4BOcg",
+                "favorite": false
+            },
+            {
+                "title": "Sax4Love",
+                "image": "img/stations/18.gif",
+                "url": "https://radio2.vip-radios.fm:18054/stream-128kmp3-Sax4love",
+                "favorite": false
+            },
+            {
+                "title": "plaza.one",
+                "image": "img/stations/19.gif",
+                "url": "https://radio.plaza.one/ogg?nocache=1709153578462",
+                "favorite": false
+            },
+            {
+                "title": "BigFM Star",
+                "image": "img/stations/20.gif",
+                "url": "https://audiotainment-sw.streamabc.net/atsw-lofifocus-mp3-128-3757575?sABC=65qs9r54%230%23r0pp6o5q7o21ro0769r41111or0q3320%23yvirbaenqvb&aw_0_1st.playerid=liveonradio&amsparams=playerid:liveonradio;skey:1709153876",
+                "favorite": false
+            },
+            {
+                "title": "Otaku no Radio",
+                "image": "img/stations/14.gif",
+                "url": "http://radio.otakunopodcast.com:8000/otakunoradio",
+                "favorite": false
+            },
+            {
+                "title": "kawaii-music",
+                "image": "img/stations/12.gif",
+                "url": "https://kawaii-music.stream.laut.fm/kawaii-music?ref=radiode&t302=2023-03-14_22-09-12&uuid=ab9862de-dd40-4080-ac65-87f5cea0bdd2",
+                "favorite": false
+            },
+            {
+                "title": "Score-radio",
+                "image": "img/stations/15.gif",
+                "url": "https://score-radio.stream.laut.fm/score-radio?ref=radiode&t302=2023-03-17_12-54-24&uuid=b609fb08-3737-4595-84dc-337f6180e06a",
+                "favorite": false
+            }
+        ]
+    }
+]

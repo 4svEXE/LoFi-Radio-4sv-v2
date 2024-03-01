@@ -1,11 +1,9 @@
-/* скроллбар */
-
 ::-webkit-scrollbar {
   width: 4px;
   height: 8px;
 }
 
-/* ползунок скроллбара */
+/* scrollbar thumb */
 ::-webkit-scrollbar-thumb {
   background-color: var(--controlss-bg-color);
   border-radius: 9em;

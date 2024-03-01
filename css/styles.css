@@ -1,13 +1,11 @@
-body{
-  margin: 0;padding: 0;
-}
 * {
   box-sizing: border-box;
   outline: none;
   text-decoration: none;
   color: var(--text-color);
 }
-/*   mini bootstrap   */
+
+/*   mini css lib   */
 .sv-flex {
   display: flex;
   justify-content: center;
@@ -26,7 +24,8 @@ body{
   grid-auto-rows: 70px;
   align-content: flex-start;
 }
-/*   mini bootstrap   */
+/*   mini css lib   */
+
 body {
   width: var(--app-width);
   height: var(--app-height);
