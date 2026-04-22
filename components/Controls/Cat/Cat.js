@@ -1,8 +1,9 @@
 const APP_CAT = "4sv-cat";
 let cat = {
   skins: ["black", "sleep", "walk", "fall", "eat", "nia", "dance", "playing"],
-  currentSkin: 0,
+  currentSkin: 1,
 };
+
 
 // Get skin id from the local storage
 if (!localStorage.getItem(APP_CAT)) {

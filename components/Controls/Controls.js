@@ -3,7 +3,11 @@ let currentStation = radioConfigs.stationId || 0;
 $("#play").onclick = () => updateControls();
 
 function updateControls() {
+  // Ensure offscreen document is active before trying to play
+  chrome.runtime.sendMessage({ type: 'ensure-offscreen' });
+
   if (radioConfigs.getItem("play") === "true") {
+
     radioConfigs.setItem("play", "false");
     $("#play").src = "img/controls/play.png";
   } else {
