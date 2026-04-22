@@ -51,16 +51,19 @@ function addStations() {
   const totalPages = Math.ceil(stations.length / stationsPerPage);
   if (totalPages > 1) {
     const paginationHTML = `
-    <div class="page-info-bubble">${currentStationsPage + 1}/${totalPages}</div>
       <button id="prev-page" class="nav-arrow prev" ${currentStationsPage === 0 ? "disabled" : ""}>
         <div class="arrow-icon"></div>
       </button>
+      <div class="page-info-bubble">${currentStationsPage + 1}/${totalPages}</div>
       <button id="next-page" class="nav-arrow next" ${currentStationsPage === totalPages - 1 ? "disabled" : ""}>
         <div class="arrow-icon"></div>
       </button>
     `;
 
-    stationsContainer.insertAdjacentHTML("afterbegin", paginationHTML);
+
+
+    stationsContainer.insertAdjacentHTML("beforeend", paginationHTML);
+
 
     $("#prev-page").onclick = (e) => {
       e.stopPropagation();
