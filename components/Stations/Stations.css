@@ -5,19 +5,16 @@
   justify-content: center;
   align-content: flex-start;
   position: relative;
-  padding: 10px 30px;
+  padding: 8px 30px;
   overflow: hidden;
+  row-gap: 4px;
+  z-index: 1;
 }
-
-
-
-
 
 .p-stations .station-wrapper {
   width: 65px;
   height: 65px;
 }
-
 
 .station-wrapper .station {
   width: 60px;
@@ -31,6 +28,7 @@
   border-radius: 8px;
   border: 1px solid var(--border-bg-color);
   background-color: var(--controlss-bg-color);
+  object-fit: cover;
 }
 
 .play-station {
@@ -61,20 +59,147 @@
   opacity: 0;
   border-radius: 50%;
   background-color: var(--active-bg-color);
+  z-index: 2;
 }
 
 .fav-icon.active {
   opacity: 1;
 }
 
-/* PAGINATION STYLES */
+/* TYPE BADGES (FOLDER / CUSTOM RADIO) */
+.station-type-badge {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  width: 14px;
+  height: 14px;
+  background: var(--main-bg-color);
+  border-radius: 3px;
+  padding: 1px;
+  border: 1px solid var(--border-bg-color);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.station-type-badge svg {
+  width: 10px;
+  height: 10px;
+}
+
+.folder-badge svg {
+  fill: #f5a623;
+}
+
+.radio-badge svg {
+  fill: #6c5ce7;
+}
+
+/* ACTION BUTTONS (EDIT & DELETE) FOR CUSTOM ITEMS */
+.station-actions-group {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  display: flex;
+  gap: 2px;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+
+.station:hover .station-actions-group {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.station-action-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid var(--border-bg-color);
+  transition: transform 0.15s;
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+.station-action-icon svg {
+  width: 10px;
+  height: 10px;
+  display: block;
+}
+
+.station-action-icon:hover {
+  transform: scale(1.2);
+}
+
+.station-edit-btn {
+  background: var(--active-bg-color);
+}
+
+.station-edit-btn svg {
+  fill: #000;
+}
+
+.station-del-btn {
+  background: #ff4757;
+}
+
+.station-del-btn svg {
+  fill: #fff;
+}
+
+/* ACTION BAR WITH ADD BUTTONS */
+.stations-action-bar {
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.stations-action-btn {
+  background: var(--controlss-bg-color);
+  border: 1px solid var(--border-bg-color);
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 7px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--text-color);
+  transition: background-color 0.2s, transform 0.1s;
+  outline: none;
+}
+
+.stations-action-btn:hover {
+  background: var(--active-bg-color);
+  transform: translateY(-1px);
+}
+
+.stations-action-btn .btn-icon {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+/* PAGINATION STYLES */
 .nav-arrow {
   position: absolute;
-  top: 50%;
+  top: 45%;
   transform: translateY(-50%);
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   background-color: var(--active-bg-color);
   opacity: .6;
   border-radius: 50%;
@@ -84,7 +209,7 @@
   justify-content: center;
   border: none;
   transition: .3s;
-  z-index: 10;
+  z-index: 2;
 }
 
 .nav-arrow:hover:not(:disabled) {
@@ -105,11 +230,10 @@
   right: 2px;
 }
 
-
 .arrow-icon {
-  width: 8px;
-  height: 8px;
-  border: 3px solid var(--main-bg-color);
+  width: 7px;
+  height: 7px;
+  border: 2px solid var(--main-bg-color);
   border-top: none;
   border-right: none;
 }
@@ -123,16 +247,179 @@
 }
 
 .page-info-bubble {
+  display: none;
+}
+
+/* CUSTOM MODAL OVERLAY (Station & Folder Add) */
+.custom-station-modal {
+  display: none;
   position: absolute;
-  bottom: 2px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 10px;
-  font-weight: bold;
-  opacity: 0.7;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: var(--main-bg-color);
-  padding: 2px 8px;
-  border-radius: 10px;
+  z-index: 25;
+  padding: 6px 10px;
+  box-sizing: border-box;
+}
+
+.custom-station-modal.active {
+  display: block;
+}
+
+.custom-station-modal .modal-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.custom-station-modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border-bg-color);
+  color: var(--text-color);
+}
+
+.custom-station-modal .modal-close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1;
+  color: var(--text-color);
+}
+
+.custom-station-modal .modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.custom-station-modal input[type="text"],
+.custom-station-modal input[type="url"] {
+  width: 100%;
+  height: 24px;
+  padding: 2px 6px;
   border: 1px solid var(--border-bg-color);
-  z-index: 10;
+  border-radius: 4px;
+  font-size: 11px;
+  box-sizing: border-box;
+  background: var(--controlss-bg-color);
+  color: var(--text-color);
+}
+
+.folder-row-select {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.folder-input-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  flex: 1;
+  border: 1px dashed var(--border-bg-color);
+  border-radius: 4px;
+  background: var(--controlss-bg-color);
+  font-size: 11px;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: background 0.2s;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.folder-input-label:hover {
+  background: var(--active-bg-color);
+}
+
+.folder-gif-picker {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--border-bg-color);
+  border-radius: 4px;
+  padding: 1px 4px;
+  background: var(--controlss-bg-color);
+  height: 24px;
+  box-sizing: border-box;
+}
+
+.folder-gif-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  border: 1px solid var(--border-bg-color);
+  object-fit: cover;
+}
+
+.folder-gif-dropdown {
+  background: transparent;
+  border: none;
+  font-size: 10px;
+  color: var(--text-color);
+  cursor: pointer;
+  outline: none;
+}
+
+.folder-status {
+  font-size: 9px;
+  opacity: 0.8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-color);
+}
+
+.folder-status.success {
+  color: #2ed573;
+  font-weight: bold;
+}
+
+.folder-status.error {
+  color: #ff4757;
+  font-weight: bold;
+}
+
+.custom-station-modal .modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.custom-station-modal .btn-cancel,
+.custom-station-modal .btn-save {
+  padding: 3px 12px;
+  font-size: 11px;
+  border-radius: 4px;
+  border: 1px solid var(--border-bg-color);
+  cursor: pointer;
+  outline: none;
+}
+
+.custom-station-modal .btn-cancel {
+  background: var(--controlss-bg-color);
+  color: var(--text-color);
+}
+
+.custom-station-modal .btn-save {
+  background: var(--active-bg-color);
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.custom-station-modal .btn-save:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }

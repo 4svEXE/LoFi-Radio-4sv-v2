@@ -12,6 +12,21 @@ var stations = [
 ];
 
 /**
+ * Merges local custom stations and folders into the main stations list.
+ */
+function mergeCustomStations(baseStations) {
+  let customList = radioConfigs.getItem("customStations") || [];
+  // Ensure array
+  if (!Array.isArray(customList)) customList = [];
+
+  // Filter out any duplicates if already present
+  const existingUrls = new Set(baseStations.map(s => s.url || s.id));
+  const newCustom = customList.filter(cs => !existingUrls.has(cs.url || cs.id));
+
+  return [...baseStations, ...newCustom];
+}
+
+/**
  * Asynchronous function to retrieve data from the database.
  * Fetches station data from a GitHub repository.
  * Decodes base64 content and updates the stations array accordingly.
@@ -65,6 +80,10 @@ async function getDataFromDB() {
   } catch (error) {
     console.log("error", error);
   }
+
+  // Preserve user's custom stations
+  stations = mergeCustomStations(stations);
+  radioConfigs.setItem("stations", stations);
 
   // Add stations to the UI
   addStations();

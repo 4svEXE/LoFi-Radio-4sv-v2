@@ -7,7 +7,6 @@ function updateControls() {
   chrome.runtime.sendMessage({ type: 'ensure-offscreen' });
 
   if (radioConfigs.getItem("play") === "true") {
-
     radioConfigs.setItem("play", "false");
     $("#play").src = "img/controls/play.png";
   } else {
@@ -18,13 +17,14 @@ function updateControls() {
   $("#loader").classList.add("active");
 }
 
-//logic for adding/deleting station to favorites
+// Logic for adding/deleting station to favorites
 $("#fav_icon").addEventListener("click", () => {
+  if (!stations[currentStation]) return;
   $("#fav_icon").classList.toggle("active");
 
   stations[currentStation].favorite = !stations[currentStation].favorite;
 
-  //sorting the stations by favorite
+  // Sorting the stations by favorite
   let tmp = [];
   stations.forEach((station) => {
     if (station.favorite) {
@@ -36,25 +36,37 @@ $("#fav_icon").addEventListener("click", () => {
 
   stations = tmp;
 
-  if (!stations[currentStation].favorite) {
+  if (!stations[currentStation] || !stations[currentStation].favorite) {
     currentStation = 0;
   }
 
   radioConfigs.setItem("stations", stations);
 
-  renderStation(currentStation); //function from Controls.js
+  renderStation(currentStation);
   addStations();
 
   console.log("rendered", currentStation, stations[currentStation], stations);
 });
 
 $("#next").onclick = () => {
+  if (radioConfigs.getItem("isFolder")) {
+    chrome.runtime.sendMessage({ type: 'folder-next-track' });
+    $("#loader").classList.add("active");
+    return;
+  }
+
   currentStation++;
   if (currentStation >= stations.length) currentStation = 0;
   renderStation(currentStation);
 };
 
 $("#prew").onclick = () => {
+  if (radioConfigs.getItem("isFolder")) {
+    chrome.runtime.sendMessage({ type: 'folder-prev-track' });
+    $("#loader").classList.add("active");
+    return;
+  }
+
   currentStation--;
   if (currentStation < 0) currentStation = stations.length - 1;
   renderStation(currentStation);
@@ -65,14 +77,36 @@ function updateStationCounter() {
 }
 
 function renderStation(station) {
+  if (!stations || stations.length === 0) return;
   let animateStationImage = radioConfigs.getItem("animations") ? "" : "_.jpg";
 
   if (station >= stations.length) station = 0;
+  if (station < 0) station = 0;
 
-  $("#s-title").innerText = stations[station].title;
-  $("#s-logo").src = stations[station].image + animateStationImage;
+  const targetStation = stations[station];
+  if (!targetStation) return;
 
-  radioConfigs.setItem("url", stations[station].url);
+  $("#s-title").innerText = targetStation.title;
+
+  // Check if image is an internal gif/jpg or external / svg
+  if (targetStation.image && targetStation.image.startsWith("img/stations/")) {
+    $("#s-logo").src = targetStation.image + animateStationImage;
+  } else if (targetStation.image) {
+    $("#s-logo").src = targetStation.image;
+  } else {
+    $("#s-logo").src = "img/stations/01.gif" + animateStationImage;
+  }
+
+  if (targetStation.isLocalFolder) {
+    radioConfigs.setItem("isFolder", true);
+    radioConfigs.setItem("folderId", targetStation.id);
+    radioConfigs.setItem("url", "");
+  } else {
+    radioConfigs.setItem("isFolder", false);
+    radioConfigs.setItem("folderId", null);
+    radioConfigs.setItem("url", targetStation.url);
+  }
+
   radioConfigs.setItem("play", "true");
   radioConfigs.setItem("stationId", station);
 

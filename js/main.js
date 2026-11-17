@@ -11,6 +11,8 @@ const defaultLSConfig = {
   soundsVolume: 0.6,
   animations: true,
   version: 0.1,
+  isFolder: false,
+  folderId: null,
 };
 
 
@@ -35,9 +37,20 @@ if (localStorage.getItem(APP_NAME)) {
 
 /**
  * Periodically checks if the radio is playing and removes the 'active' class from the loader if it is.
+ * Also syncs track title if playing a local music folder.
  */
 setInterval(() => {
   if (localStorage.getItem(APP_NAME + "Play") === "true") {
     $("#loader").classList.remove("active");
+  }
+
+  if (radioConfigs.getItem("isFolder")) {
+    const trackTitle = localStorage.getItem(APP_NAME + "FolderTrackTitle");
+    if (trackTitle && $("#s-title")) {
+      const currentText = $("#s-title").innerText;
+      if (currentText !== trackTitle) {
+        $("#s-title").innerText = trackTitle;
+      }
+    }
   }
 }, 100);
