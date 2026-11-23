@@ -1,4 +1,4 @@
-let currentStation = radioConfigs.stationId || 0;
+let currentStation = parseInt(radioConfigs.getItem("stationId")) || 0;
 
 $("#play").onclick = () => updateControls();
 
@@ -19,6 +19,9 @@ function updateControls() {
 
 // Logic for adding/deleting station to favorites
 $("#fav_icon").addEventListener("click", () => {
+  if (radioConfigs.getItem("stations")) {
+    stations = radioConfigs.getItem("stations");
+  }
   if (!stations[currentStation]) return;
   $("#fav_icon").classList.toggle("active");
 
@@ -43,33 +46,39 @@ $("#fav_icon").addEventListener("click", () => {
   radioConfigs.setItem("stations", stations);
 
   renderStation(currentStation);
-  addStations();
+  if (typeof addStations === "function") {
+    addStations();
+  }
 
   console.log("rendered", currentStation, stations[currentStation], stations);
 });
 
 $("#next").onclick = () => {
-  if (radioConfigs.getItem("isFolder")) {
-    chrome.runtime.sendMessage({ type: 'folder-next-track' });
-    $("#loader").classList.add("active");
-    return;
+  if (radioConfigs.getItem("stations")) {
+    stations = radioConfigs.getItem("stations");
   }
-
+  currentStation = parseInt(radioConfigs.getItem("stationId")) || 0;
   currentStation++;
   if (currentStation >= stations.length) currentStation = 0;
   renderStation(currentStation);
+  if (typeof addStations === "function") {
+    currentStationsPage = Math.floor(currentStation / stationsPerPage);
+    addStations();
+  }
 };
 
 $("#prew").onclick = () => {
-  if (radioConfigs.getItem("isFolder")) {
-    chrome.runtime.sendMessage({ type: 'folder-prev-track' });
-    $("#loader").classList.add("active");
-    return;
+  if (radioConfigs.getItem("stations")) {
+    stations = radioConfigs.getItem("stations");
   }
-
+  currentStation = parseInt(radioConfigs.getItem("stationId")) || 0;
   currentStation--;
   if (currentStation < 0) currentStation = stations.length - 1;
   renderStation(currentStation);
+  if (typeof addStations === "function") {
+    currentStationsPage = Math.floor(currentStation / stationsPerPage);
+    addStations();
+  }
 };
 
 function updateStationCounter() {
@@ -107,6 +116,7 @@ function renderStation(station) {
     radioConfigs.setItem("url", targetStation.url);
   }
 
+  currentStation = station;
   radioConfigs.setItem("play", "true");
   radioConfigs.setItem("stationId", station);
 
