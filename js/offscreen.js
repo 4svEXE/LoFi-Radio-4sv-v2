@@ -8,8 +8,29 @@ let currentFolderTracks = [];
 let currentFolderTrackIndex = 0;
 let currentBlobUrl = null;
 let isSettingUpTrack = false;
+let seekTargetTime = null;
 
 const radio = $(".radio");
+
+// Track current time progress and save to localStorage
+radio.addEventListener("timeupdate", () => {
+  if (currentPlayingFolderId && radio.currentTime > 0) {
+    localStorage.setItem(APP_NAME + 'FolderPlaybackState_' + currentPlayingFolderId, JSON.stringify({
+      trackIndex: currentFolderTrackIndex,
+      time: Math.floor(radio.currentTime)
+    }));
+  }
+});
+
+// Once metadata is loaded, if we have a saved time to resume, seek to it
+radio.addEventListener("loadedmetadata", () => {
+  if (seekTargetTime !== null && seekTargetTime > 0) {
+    if (seekTargetTime < radio.duration) {
+      radio.currentTime = seekTargetTime;
+    }
+    seekTargetTime = null;
+  }
+});
 
 // Listen for audio ended event for continuous folder autoplay
 radio.addEventListener("ended", () => {
@@ -36,7 +57,7 @@ radio.addEventListener("error", (e) => {
   }
 });
 
-async function loadFolderTracks(folderId, targetIndex = 0) {
+async function loadFolderTracks(folderId) {
   try {
     const folder = await LocalMusicDB.getFolder(folderId);
     if (!folder || !folder.files || folder.files.length === 0) {
@@ -48,14 +69,40 @@ async function loadFolderTracks(folderId, targetIndex = 0) {
 
     currentPlayingFolderId = folderId;
     currentFolderTracks = folder.files;
-    currentFolderTrackIndex = targetIndex % currentFolderTracks.length;
-    await playCurrentFolderTrack();
+
+    // Check if there is saved playback state (resume last track and time)
+    const savedStateRaw = localStorage.getItem(APP_NAME + 'FolderPlaybackState_' + folderId);
+    let targetIndex = 0;
+    let targetTime = 0;
+
+    if (savedStateRaw) {
+      try {
+        const state = JSON.parse(savedStateRaw);
+        if (state.trackIndex !== undefined && state.trackIndex < currentFolderTracks.length) {
+          targetIndex = state.trackIndex;
+        }
+        if (state.time !== undefined && state.time > 0) {
+          targetTime = state.time;
+        }
+      } catch (e) {
+        console.error("Error reading saved folder playback state:", e);
+      }
+    } else {
+      // If no saved state, start from a random track and random position
+      targetIndex = Math.floor(Math.random() * currentFolderTracks.length);
+      // We will allow loadedmetadata or initial track to pick a random time (or seek after metadata)
+      // For first time random play, we set seekTargetTime to a random percentage (e.g. 10s - 60s) or let loadedmetadata pick
+      targetTime = -1; // -1 indicates random start position
+    }
+
+    currentFolderTrackIndex = targetIndex;
+    await playCurrentFolderTrack(targetTime);
   } catch (err) {
     console.error("Failed to load folder tracks:", err);
   }
 }
 
-async function playCurrentFolderTrack() {
+async function playCurrentFolderTrack(initialSeekTime = null) {
   if (currentFolderTracks.length === 0) return;
   isSettingUpTrack = true;
 
@@ -67,6 +114,22 @@ async function playCurrentFolderTrack() {
   const track = currentFolderTracks[currentFolderTrackIndex];
   currentBlobUrl = URL.createObjectURL(track.blob);
   radio.src = currentBlobUrl;
+
+  if (initialSeekTime === -1) {
+    // When metadata loads, seek to random position
+    const onMeta = () => {
+      if (radio.duration && radio.duration > 20) {
+        // Random time between 0 and 70% of duration
+        radio.currentTime = Math.floor(Math.random() * (radio.duration * 0.7));
+      }
+      radio.removeEventListener("loadedmetadata", onMeta);
+    };
+    radio.addEventListener("loadedmetadata", onMeta);
+  } else if (initialSeekTime !== null && initialSeekTime > 0) {
+    seekTargetTime = initialSeekTime;
+  } else {
+    seekTargetTime = null;
+  }
 
   try {
     const rawStorage = localStorage.getItem(APP_NAME);
