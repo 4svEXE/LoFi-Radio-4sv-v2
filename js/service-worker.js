@@ -23,6 +23,8 @@ chrome.runtime.onInstalled.addListener(() => {
   setupOffscreenDocument(OFFSCREEN_DOCUMENT_PATH);
 });
 
+let creatingOffscreenPromise = null;
+
 /**
  * Ensures the offscreen document is created.
  * @param {string} path - Path to the offscreen document.
@@ -33,15 +35,26 @@ async function setupOffscreenDocument(path) {
     return;
   }
 
+  // Prevent multiple concurrent calls creating documents simultaneously
+  if (creatingOffscreenPromise) {
+    await creatingOffscreenPromise;
+    return;
+  }
+
   // Create offscreen document
   try {
-    await chrome.offscreen.createDocument({
+    creatingOffscreenPromise = chrome.offscreen.createDocument({
       url: path,
       reasons: ['AUDIO_PLAYBACK'],
       justification: 'Playback of Lo-Fi radio stations in the background.',
     });
+    await creatingOffscreenPromise;
     console.log('Offscreen document created.');
   } catch (error) {
-    console.error('Error creating offscreen document:', error);
+    if (!error.message?.includes('Only a single offscreen document may be created')) {
+      console.error('Error creating offscreen document:', error);
+    }
+  } finally {
+    creatingOffscreenPromise = null;
   }
 }

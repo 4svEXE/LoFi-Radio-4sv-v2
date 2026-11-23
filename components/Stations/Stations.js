@@ -31,7 +31,7 @@ function addStations() {
     let icon = "play";
 
     // Check if the current station is active
-    if (radioConfigs.stationId == actualIndex) {
+    if (parseInt(radioConfigs.getItem("stationId")) === actualIndex) {
       active = "active";
       icon = "pause";
     }
@@ -202,11 +202,11 @@ function addStations() {
         stations.splice(indexToDelete, 1);
         radioConfigs.setItem("stations", stations);
 
-        if (radioConfigs.stationId === indexToDelete) {
+        if (parseInt(radioConfigs.getItem("stationId")) === indexToDelete) {
           currentStation = 0;
           renderStation(0);
-        } else if (radioConfigs.stationId > indexToDelete) {
-          currentStation = radioConfigs.stationId - 1;
+        } else if (parseInt(radioConfigs.getItem("stationId")) > indexToDelete) {
+          currentStation = parseInt(radioConfigs.getItem("stationId")) - 1;
           radioConfigs.setItem("stationId", currentStation);
         }
 
@@ -360,7 +360,7 @@ function renderModalsAndEvents() {
       radioConfigs.setItem("customStations", customStations);
       radioConfigs.setItem("stations", stations);
 
-      if (radioConfigs.stationId === editingStationIndex) {
+      if (parseInt(radioConfigs.getItem("stationId")) === editingStationIndex) {
         renderStation(editingStationIndex);
       }
     } else {
@@ -509,7 +509,7 @@ function renderModalsAndEvents() {
         radioConfigs.setItem("customStations", customStations);
         radioConfigs.setItem("stations", stations);
 
-        if (radioConfigs.stationId === editingFolderIndex) {
+        if (parseInt(radioConfigs.getItem("stationId")) === editingFolderIndex) {
           renderStation(editingFolderIndex);
         }
       } else {

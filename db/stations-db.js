@@ -26,6 +26,13 @@ function mergeCustomStations(baseStations) {
   return [...baseStations, ...newCustom];
 }
 
+// Synchronously initialize stations with cached stations or custom stations right away
+if (radioConfigs.getItem("stations")) {
+  stations = radioConfigs.getItem("stations");
+} else {
+  stations = mergeCustomStations(stations);
+}
+
 /**
  * Asynchronous function to retrieve data from the database.
  * Fetches station data from a GitHub repository.
@@ -89,7 +96,7 @@ async function getDataFromDB() {
   addStations();
 
   // Renders the current station
-  renderStation(radioConfigs.getItem("stationId"));
+  renderStation(radioConfigs.getItem("stationId"), false);
 }
 
 // Fetch data from the database when the script is executed

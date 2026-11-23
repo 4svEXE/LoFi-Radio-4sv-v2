@@ -1,17 +1,22 @@
 let currentStation = parseInt(radioConfigs.getItem("stationId")) || 0;
 
-$("#play").onclick = () => updateControls();
+$("#play").onclick = () => {
+  if (radioConfigs.getItem("play") === "true") {
+    radioConfigs.setItem("play", "false");
+  } else {
+    radioConfigs.setItem("play", "true");
+  }
+  updateControls();
+};
 
 function updateControls() {
   // Ensure offscreen document is active before trying to play
   chrome.runtime.sendMessage({ type: 'ensure-offscreen' });
 
   if (radioConfigs.getItem("play") === "true") {
-    radioConfigs.setItem("play", "false");
-    $("#play").src = "img/controls/play.png";
-  } else {
-    radioConfigs.setItem("play", "true");
     $("#play").src = "img/controls/pause.png";
+  } else {
+    $("#play").src = "img/controls/play.png";
   }
 
   $("#loader").classList.add("active");
@@ -85,7 +90,10 @@ function updateStationCounter() {
   $("#w-title").innerText = `${currentStation + 1}/${stations.length}`;
 }
 
-function renderStation(station) {
+function renderStation(station, triggerPlay = true) {
+  if (radioConfigs.getItem("stations")) {
+    stations = radioConfigs.getItem("stations");
+  }
   if (!stations || stations.length === 0) return;
   let animateStationImage = radioConfigs.getItem("animations") ? "" : "_.jpg";
 
@@ -117,10 +125,12 @@ function renderStation(station) {
   }
 
   currentStation = station;
-  radioConfigs.setItem("play", "true");
   radioConfigs.setItem("stationId", station);
 
-  updateControls();
+  if (triggerPlay) {
+    radioConfigs.setItem("play", "true");
+    updateControls();
+  }
   updateStationCounter();
 
   if (stations[currentStation]?.favorite) {
@@ -129,12 +139,14 @@ function renderStation(station) {
     $("#fav_icon").classList.remove("active");
   }
 
-  setTimeout(() => {
-    radioConfigs.setItem("play", "false");
-  }, 100);
-  setTimeout(() => updateControls(), 500);
+  if (triggerPlay) {
+    setTimeout(() => {
+      radioConfigs.setItem("play", "false");
+    }, 100);
+    setTimeout(() => updateControls(), 500);
+  }
 }
-renderStation(radioConfigs.getItem("stationId"));
+renderStation(radioConfigs.getItem("stationId"), false);
 
 // VOLUME CONTROL
 $("#volume").onchange = () => {

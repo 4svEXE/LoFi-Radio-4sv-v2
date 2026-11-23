@@ -46,11 +46,21 @@ setInterval(() => {
 
   if (radioConfigs.getItem("isFolder")) {
     const trackTitle = localStorage.getItem(APP_NAME + "FolderTrackTitle");
-    if (trackTitle && $("#s-title")) {
-      const currentText = $("#s-title").innerText;
-      if (currentText !== trackTitle) {
-        $("#s-title").innerText = trackTitle;
+    if ($("#s-title")) {
+      // Ensure folder name is displayed as the title
+      const stationId = parseInt(radioConfigs.getItem("stationId")) || 0;
+      const currentStations = radioConfigs.getItem("stations") || stations;
+      const currentStationObj = currentStations && currentStations[stationId];
+      const folderName = (currentStationObj && currentStationObj.title) || "Local Music";
+      
+      if ($("#s-title").innerText !== folderName) {
+        $("#s-title").innerText = folderName;
+      }
+      if (trackTitle) {
+        $("#s-title").setAttribute("title", "Track: " + trackTitle);
       }
     }
+  } else if ($("#s-title") && $("#s-title").hasAttribute("title")) {
+    $("#s-title").removeAttribute("title");
   }
 }, 100);
